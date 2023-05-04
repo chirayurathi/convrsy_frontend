@@ -28,8 +28,8 @@ const filter = createFilterOptions();
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     password: "",
     company: null,
     email: "",
@@ -120,14 +120,14 @@ export default function SignUp() {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="given-name"
-                name="firstName"
+                name="first_name"
                 required
                 fullWidth
-                id="firstName"
+                id="first_name"
                 label="First Name"
                 autoFocus
                 onChange={(e) => {
-                  onChangeHandle("firstName", e.target.value);
+                  onChangeHandle("first_name", e.target.value);
                 }}
               />
             </Grid>
@@ -135,12 +135,12 @@ export default function SignUp() {
               <TextField
                 required
                 fullWidth
-                id="lastName"
+                id="last_name"
                 label="Last Name"
-                name="lastName"
+                name="last_name"
                 autoComplete="family-name"
                 onChange={(e) => {
-                  onChangeHandle("lastName", e.target.value);
+                  onChangeHandle("last_name", e.target.value);
                 }}
               />
             </Grid>

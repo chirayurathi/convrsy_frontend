@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 const Dashboard = ()=>{
     const {state, dispatch} = useContext(AuthContext);
     return(
-        <Typography> Logged in as {state.user}</Typography>
+        <Typography> Logged in as {state.user.first_name}</Typography>
     );
 }
 
