@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { getUser } from "../api";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
-const theme = createTheme({
+const themeTemplate = {
   palette: {
     primary: {
       main: "#F5EA09"
@@ -17,11 +17,31 @@ const theme = createTheme({
       main: "#494c7d"
     }
   }
-});
+};
 
 function App() {
   const {state, dispatch} = useContext(AuthContext);
   const [load,setLoad] = useState(true);
+  const [theme, setTheme] = useState(themeTemplate);
+  useEffect(()=>{
+    if(state?.user?.company?.color){
+      console.log("changed");
+      let _theme = {
+        ...theme,
+        palette:{
+          ...theme.palette,
+          primary:{
+            ...theme.palette.primary,
+            main:state.user.company.color
+          }
+        }
+      }
+      setTheme(_theme);
+    }
+    else{
+      setTheme(themeTemplate);
+    }
+  },[state.user])
   const onSuccess = (response)=>{
     console.log("response");
     instance.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("access")}`;
@@ -45,7 +65,7 @@ function App() {
 
   return (
       !load && 
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={createTheme(theme)}>
         <Grid container>
           <DashboardTemplate>
             <AllRoutes/>

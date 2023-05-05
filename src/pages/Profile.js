@@ -16,33 +16,20 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import instance from "../utils/axios";
 import { toast } from "react-toastify";
-import { signup } from "../api/auth";
+import { signup, updateUser } from "../api/auth";
 import ColorPicker from "material-ui-color-picker";
 
 export default function SignUp() {
   const { state, dispatch } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    firstName: state.user.firstName,
-    lastname: state.user.lastname,
-    company: state.user.company.name,
+    id:state.user.id,
+    first_name: state.user.first_name,
+    last_name: state.user.last_name,
+    company: state?.user?.company?.name,
     email: state.user.email,
-    color:state.user.company.color
+    color:state?.user?.company?.color
   });
   const navigate = useNavigate();
-
-  const [companies, setCompanies] = useState([]);
-  useEffect(() => {
-    instance
-      .get("/get-companies")
-      .then((response) => {
-        console.log(response.data);
-        setCompanies(response.data.data);
-      })
-      .catch((response) => {
-        console.log(response);
-        toast.error(response.message);
-      });
-  }, []);
 
   const onChangeHandle = (index, value) => {
     let _formData = { ...formData };
@@ -52,23 +39,24 @@ export default function SignUp() {
 
   const onSuccess = (response) => {
     console.log("response");
-    localStorage.setItem("access", response.data.data.access);
-    instance.defaults.headers.common.Authorization = response.data.data.access;
     dispatch({
-      type: "LOGIN_SUCCESS",
+      type: "UPDATE_USER",
       payload: {
         ...response.data.data,
       },
     });
-    toast.success("New User Created Successfully.");
+    toast.success("Updated Successfully");
     navigate("/dashboard");
   };
 
   const handleSubmit = () => {
-    signup(
+    updateUser(
       {
         ...formData,
-        company: formData.company.name,
+        company:{
+          name: formData.company,
+          color:formData.color
+        }
       },
       onSuccess
     );
@@ -112,16 +100,16 @@ export default function SignUp() {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="given-name"
-                name="firstName"
+                name="first_name"
                 required
                 fullWidth
-                id="firstName"
+                id="first_name"
                 label="First Name"
                 autoFocus
                 onChange={(e) => {
-                  onChangeHandle("firstName", e.target.value);
+                  onChangeHandle("first_name", e.target.value);
                 }}
-                value={formData.firstName}
+                value={formData.first_name}
                 xs={{height:"50px"}}
               />
             </Grid>
@@ -129,14 +117,14 @@ export default function SignUp() {
               <TextField
                 required
                 fullWidth
-                id="lastName"
+                id="last_name"
                 label="Last Name"
-                name="lastName"
+                name="last_name"
                 autoComplete="family-name"
                 onChange={(e) => {
-                  onChangeHandle("lastName", e.target.value);
+                  onChangeHandle("last_name", e.target.value);
                 }}
-                value={formData.lastname}
+                value={formData.last_name}
                 xs={{height:"50px"}}
               />
             </Grid>
@@ -144,6 +132,7 @@ export default function SignUp() {
               <Grid item xs={6}>
                 <TextField name="company" disabled value={formData.company}
                 xs={{height:"50px"}}
+                label="Company"
                  />
               </Grid>
               <Grid item xs={6}>
@@ -151,10 +140,11 @@ export default function SignUp() {
                   name="color"
                   defaultValue="#000"
                   // value={this.state.color} - for controlled component
-                  onChange={(color) => console.log(color)}
+                  onChange={(color) => onChangeHandle("color", color) }
                   fullWidth
                   variant="outlined"
                   label="Theme"
+                  value={formData.color}
                 />
               </Grid>
             </Grid>

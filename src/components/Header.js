@@ -44,6 +44,7 @@ const Header = () => {
       type:"LOGOUT"
     })
     handleCloseUserMenu();
+    localStorage.removeItem("access");
     navigate("/login");
   }
   console.log(state);
@@ -68,7 +69,7 @@ const Header = () => {
               textDecoration: "none",
             }}
           >
-            {state.user?.company}
+            {state.user?.company?.name}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -124,7 +125,7 @@ const Header = () => {
               textDecoration: "none",
             }}
           >
-            {state.company}
+            {state?.company}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } , width:"90%", margin:"auto", textAlign:"center", justifyContent:"space-around"}}>
             <Typography variant="h5"> CONVRSY </Typography>

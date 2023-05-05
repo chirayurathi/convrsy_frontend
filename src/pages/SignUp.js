@@ -41,7 +41,7 @@ export default function SignUp() {
 
   const [companies, setCompanies] = useState([]);
   useEffect(()=>{
-    instance.get("/get-companies")
+    instance.get("/get-companies/")
     .then((response)=>{
       console.log(response.data);
       setCompanies(response.data.data);
@@ -72,7 +72,7 @@ export default function SignUp() {
   const onSuccess = (response)=>{
     console.log("response");
     localStorage.setItem("access",response.data.data.access);
-    instance.defaults.headers.common.Authorization = response.data.data.access;
+    instance.defaults.headers.common.Authorization = `Bearer ${response.data.data.access}`;
     dispatch({
         type:"LOGIN_SUCCESS",
         payload:{
@@ -173,7 +173,9 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <Autocomplete
+                xs={{width:"100%!important"}}
                 fullWidth
+                label="company"
                 value={formData.company}
                 onChange={(event, newValue) => {
                   if (typeof newValue === "string") {
@@ -228,7 +230,7 @@ export default function SignUp() {
                 sx={{ width: 300 }}
                 freeSolo
                 renderInput={(params) => (
-                  <TextField {...params} label="Free solo dialog" />
+                  <TextField {...params} label="company" />
                 )}
               />
             </Grid>

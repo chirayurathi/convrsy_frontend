@@ -29,7 +29,7 @@ export default function Login() {
   const onSuccess = (response)=>{
     console.log(response.data.data);
     localStorage.setItem("access",response.data.data.access_token);
-    instance.defaults.headers.common.Authorization = response.data.data.access_token;
+    instance.defaults.headers.common.Authorization = `Bearer ${response.data.data.access_token}`;
     dispatch({
         type:"LOGIN_SUCCESS",
         payload:{

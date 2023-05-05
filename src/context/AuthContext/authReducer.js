@@ -16,6 +16,11 @@ const authReducer = (state, action) => {
           token: null,
           error: action.payload.error,
         };
+      case "UPDATE_USER":
+        return{
+          ...state,
+          user:action.payload
+        };
       case "LOGOUT":
         return {
           ...state,

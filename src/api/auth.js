@@ -52,3 +52,19 @@ export const getUser = (onSuccess,setLoad) =>{
         setLoad(false);
     })
 }
+
+export const updateUser = (data, onSuccess)=>{
+    axios.put('/update-user/',data)
+    .then((response)=>{
+        console.log(response);
+        if(response.data.success){
+            onSuccess(response);
+        }
+        else{
+            toast.error(response.data.message);
+        }
+    })
+    .catch((error)=>{
+        console.log(error);
+    })
+};
