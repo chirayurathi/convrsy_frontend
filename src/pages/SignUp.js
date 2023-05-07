@@ -23,6 +23,7 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import instance from "../utils/axios";
 import { toast } from "react-toastify";
 import { signup } from "../api/auth";
+import {Link as RouterLink} from 'react-router-dom';
 
 const filter = createFilterOptions();
 
@@ -179,7 +180,6 @@ export default function SignUp() {
                 value={formData.company}
                 onChange={(event, newValue) => {
                   if (typeof newValue === "string") {
-                    // timeout to avoid instant validation of the dialog's form.
                     setTimeout(() => {
                       toggleOpen(true);
                       setDialogValue({
@@ -203,7 +203,7 @@ export default function SignUp() {
                   if (params.inputValue !== "") {
                     filtered.push({
                       inputValue: params.inputValue,
-                      title: `Add "${params.inputValue}"`,
+                      name: `Add "${params.inputValue}"`,
                     });
                   }
 
@@ -252,13 +252,40 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
+            <RouterLink to="/login" style={{ textDecoration: 'none' }}>
+                <Link href="#" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </RouterLink>
             </Grid>
           </Grid>
         </Box>
       </Box>
+      <Dialog open={open} onClose={handleClose}>
+        <form onSubmit={handleSubmit}>
+          <DialogTitle>Add a new company</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              value={dialogValue.name}
+              onChange={(event) =>
+                setDialogValue({
+                  name: event.target.value,
+                })
+              }
+              label="Name"
+              type="text"
+              variant="standard"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button type="submit">Add</Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </Container>
   );
 }

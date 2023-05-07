@@ -16,7 +16,16 @@ const themeTemplate = {
     secondary: {
       main: "#494c7d"
     }
-  }
+  },
+  components: {
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          fontWeight:"500",
+        },
+      },
+    },
+  },
 };
 
 function App() {
@@ -60,6 +69,9 @@ function App() {
       console.log(localStorage.getItem("access"))
       instance.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("access")}`;
       getUser(onSuccess,setLoad);
+    }
+    else{
+      setLoad(false);
     }
   },[])
 

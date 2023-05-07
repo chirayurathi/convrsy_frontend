@@ -138,13 +138,14 @@ export default function SignUp() {
               <Grid item xs={6}>
                 <ColorPicker
                   name="color"
-                  defaultValue="#000"
                   // value={this.state.color} - for controlled component
                   onChange={(color) => onChangeHandle("color", color) }
                   fullWidth
                   variant="outlined"
                   label="Theme"
                   value={formData.color}
+                  TextFieldProps={{ value: formData.color }}
+                  InputLabelProps={{shrink: true}}
                 />
               </Grid>
             </Grid>
