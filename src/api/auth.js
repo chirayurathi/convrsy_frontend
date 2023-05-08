@@ -68,19 +68,3 @@ export const updateUser = (data, onSuccess)=>{
         console.log(error);
     })
 };
-
-export const createCompany = (data, onSuccess)=>{
-    axios.post('/create-company/',data)
-    .then((response)=>{
-        console.log(response);
-        if(response.data.success){
-            onSuccess(response);
-        }
-        else{
-            toast.error(response.data.message);
-        }
-    })
-    .catch((error)=>{
-        console.log(error);
-    })
-};

@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import instance from "../utils/axios";
 import { toast } from "react-toastify";
-import { signup } from "../api/auth";
+import { createCompany, getCompanies, signup } from "../api";
 import {Link as RouterLink} from 'react-router-dom';
 
 const filter = createFilterOptions();
@@ -41,16 +41,9 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   const [companies, setCompanies] = useState([]);
+
   useEffect(()=>{
-    instance.get("/get-companies/")
-    .then((response)=>{
-      console.log(response.data);
-      setCompanies(response.data.data);
-    })
-    .catch((response)=>{
-      console.log(response);
-      toast.error(response.message);
-    })
+    getCompanies(setCompanies);
   },[]);
 
   const onChangeHandle = (index, value) => {
@@ -84,12 +77,14 @@ export default function SignUp() {
     navigate('/dashboard');
   }
 
-  const handleSubmitCompany = (event) => {
-    event.preventDefault();
-    let _formData = {...formData};
-    _formData["company"] = dialogValue.name;
-    setFormData(_formData);
+  const onCompanySuccess = (response)=>{
+    toast.success("New Company Created Successfully.");
+    onChangeHandle("company", response.data.data);
     handleClose();
+  }
+
+  const handleSubmitCompany = (event) => {
+    createCompany(dialogValue, onCompanySuccess);
   };
 
   const handleSubmit = ()=>{
@@ -192,9 +187,7 @@ export default function SignUp() {
                       name: newValue.inputValue,
                     });
                   } else {
-                    let _formData = {...formData};
-                    _formData["company"] = newValue;
-                    setFormData(_formData);
+                    onChangeHandle("company", newValue);
                   }
                 }}
                 filterOptions={(options, params) => {
@@ -282,7 +275,7 @@ export default function SignUp() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add</Button>
+            <Button onClick={handleSubmitCompany}>Add</Button>
           </DialogActions>
         </form>
       </Dialog>
