@@ -139,12 +139,12 @@ export default function SignUp() {
                 <ColorPicker
                   name="color"
                   // value={this.state.color} - for controlled component
-                  onChange={(color) => onChangeHandle("color", color) }
+                  onChange={(color) => onChangeHandle("color", color||"#F5EA09") }
                   fullWidth
                   variant="outlined"
                   label="Theme"
-                  value={formData.color}
-                  TextFieldProps={{ value: formData.color }}
+                  value={formData.color||"#F5EA09"}
+                  TextFieldProps={{ value: formData.color||"#F5EA09" }}
                   InputLabelProps={{shrink: true}}
                 />
               </Grid>

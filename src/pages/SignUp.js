@@ -95,6 +95,7 @@ export default function SignUp() {
   }
 
   return (
+    <Grid item xs={12}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -280,5 +281,6 @@ export default function SignUp() {
         </form>
       </Dialog>
     </Container>
+    </Grid>
   );
 }

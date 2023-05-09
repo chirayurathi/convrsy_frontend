@@ -51,6 +51,7 @@ export default function Login() {
   };
 
   return (
+    <Grid item justifyContent="space-around" xs={12}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -118,5 +119,6 @@ export default function Login() {
           </Box>
         </Box>
       </Container>
+      </Grid>
   );
 }

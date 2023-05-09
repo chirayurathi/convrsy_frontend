@@ -7,6 +7,7 @@ import SignUp from "../pages/SignUp";
 import Dashboard from '../pages/Dashboard'; 
 import Profile from '../pages/Profile'; 
 import AuthGuard from "../hoc/AuthGuard";
+import CreateForm from "../pages/CreateForm";
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
 const AllRoutes = () => {
@@ -16,6 +17,7 @@ const AllRoutes = () => {
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/dashboard" element={<AuthGuard><Dashboard/></AuthGuard>} />
         <Route path="/profile" element={<AuthGuard><Profile/></AuthGuard>} />
+        <Route path="/create-form" element={<AuthGuard><CreateForm/></AuthGuard>} />
     </Routes>
   );
 };

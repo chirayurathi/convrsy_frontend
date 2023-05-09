@@ -1,12 +1,24 @@
 import React from "react";
 import Footer from "../Footer";
 import Header from "../Header";
+import SideNav from "../SideNav";
+import { Grid } from "@mui/material";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 
 const DashboardTemplate = ({children})=>{
+    const {state, dispatch} = useContext(AuthContext);
+
     return(
         <>
             <Header/>
-                {children}
+            <Grid container>
+                {state?.isAuthenticated &&
+                <Grid item>
+                    <SideNav/>
+                </Grid>}
+                    {children}
+            </Grid>
             <Footer/>
         </>
     )
