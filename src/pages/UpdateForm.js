@@ -1,14 +1,16 @@
 import { Button, Divider, Grid, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
 import SplitButton from "../components/SplitButton";
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
 import CircleIcon from '@mui/icons-material/Circle';
-import { createForm } from "../api";
+import { createForm, getFormByID } from "../api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-const CreateForm = () => {
+import {useParams} from "react-router-dom";
+
+const UpdateForm = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title:"",
@@ -16,6 +18,15 @@ const CreateForm = () => {
 
         ]
     })
+
+    const {id} = useParams();
+
+    useEffect(()=>{
+        getFormByID(id, setFormData);
+    },[id]);
+    useEffect(()=>{
+        console.log(formData);
+    },[formData])
 
     const addQuestion = ()=>{
         setFormData({
@@ -33,7 +44,7 @@ const CreateForm = () => {
     const addOption = (question)=>{
         let _formData = {...formData};
         let _questions = [..._formData.questions];
-        let _options = [..._questions[question].options,""];
+        let _options = [..._questions[question].options,{name:""}];
         _questions[question].options = _options;
         _formData.questions = _questions;
         setFormData(_formData);
@@ -67,7 +78,7 @@ const CreateForm = () => {
         let _formData = {...formData};
         let _questions = [..._formData.questions];
         let _options = [..._questions[qId].options];
-        _options[oId] = value;
+        _options[oId].text = value;
         _questions[qId].options = _options;
         _formData.questions = _questions;
         setFormData(_formData);
@@ -140,7 +151,7 @@ const CreateForm = () => {
                                     <CircleIcon />
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <TextField variant="standard" fullWidth placeholder="Option" value={option} onChange={(e)=>{updateOptions(index, oIndex, e.target.value)}} />
+                                    <TextField variant="standard" fullWidth placeholder="Option" value={option.text} onChange={(e)=>{updateOptions(index, oIndex, e.target.value)}} />
                                 </Grid>
                             </Grid>
                         ))}
@@ -171,4 +182,4 @@ const CreateForm = () => {
   );
 };
 
-export default CreateForm;
+export default UpdateForm;

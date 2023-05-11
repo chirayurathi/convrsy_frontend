@@ -8,6 +8,8 @@ import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile'; 
 import AuthGuard from "../hoc/AuthGuard";
 import CreateForm from "../pages/CreateForm";
+import MyForms from "../pages/MyForms";
+import UpdateForm from "../pages/UpdateForm";
 //-----------------------|| ROUTING RENDER ||-----------------------//
 
 const AllRoutes = () => {
@@ -18,6 +20,8 @@ const AllRoutes = () => {
         <Route path="/dashboard" element={<AuthGuard><Dashboard/></AuthGuard>} />
         <Route path="/profile" element={<AuthGuard><Profile/></AuthGuard>} />
         <Route path="/create-form" element={<AuthGuard><CreateForm/></AuthGuard>} />
+        <Route path="/my-forms" element={<AuthGuard><MyForms/></AuthGuard>} />
+        <Route path="/forms/:id" element={<AuthGuard><UpdateForm/></AuthGuard>} />
     </Routes>
   );
 };

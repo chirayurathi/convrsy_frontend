@@ -12,7 +12,7 @@ const DashboardTemplate = ({children})=>{
     return(
         <>
             <Header/>
-            <Grid container>
+            <Grid container sx={{overflow:"auto", height:"100vh"}}>
                 {state?.isAuthenticated &&
                 <Grid item>
                     <SideNav/>

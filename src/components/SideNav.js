@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 
 function SideNav() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
@@ -38,8 +39,8 @@ function SideNav() {
       >
         {/* {!broken && ( */}
         <Menu>
-          <MenuItem icon={<AddCircleRoundedIcon />}>Create New Form</MenuItem>
-          <MenuItem icon={<PeopleOutlinedIcon />}>Team</MenuItem>
+          <MenuItem icon={<AddCircleRoundedIcon />} href="/create-form">Create New Form</MenuItem>
+          <MenuItem icon={<NewspaperIcon/>} href="/my-forms">Your Forms</MenuItem>
           <MenuItem icon={<ContactsOutlinedIcon />}>Contacts</MenuItem>
           <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
           <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
